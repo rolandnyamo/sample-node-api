@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "rolandndev"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "rolandndev"
+    spec:
+      containers:
+        - name: "rolandndev"
+          image: "apimysql01.azurecr.io/rolandndev"
+          ports:
+          - containerPort: 80
