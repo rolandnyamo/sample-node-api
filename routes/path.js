@@ -1,18 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var dns = require('dns')
-var traceroute = require('traceroute');
 var ping = require('ping');
 
 /* GET users listing. */
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
 
-  var obj = {}
+  var obj = {}, dst = null;
 
-  obj.dns_servers = dns.promises.getServers()  
+  obj.dns_servers = dns.promises.getServers()
+  console.log(obj.dns_servers)
+  console.log(req.query.dst)
 
-  var host = process.env.PING_IP
+  req.query.dst ? dst = req.query.dst : null;
+
+  var host = req.query.dst ? req.query.dst : process.env.PING_IP
 
   ping.promise.probe(host)
     .then(function (response) {
